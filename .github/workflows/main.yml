@@ -14,7 +14,7 @@ jobs:
 
           
       - name: Save Snyk test results
-        run: snyk test --json > build.txt 
+        run: snyk test --json >> build.txt 
         working-directory: $GITHUB_WORKSPACE    
           
       - name: List files in working directory
