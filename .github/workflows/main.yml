@@ -1,28 +1,23 @@
-name: Example workflow for Maven using Snyk
+name: Snyk Security Scan and Report
+ 
 on:
-  workflow_dispatch:
 
+ workflow_dispatch:
+ 
 jobs:
-  security:
+  security_scan_and_report:
     runs-on: ubuntu-latest
+ 
     steps:
-      - uses: actions/checkout@master
-
+      - name: Checkout code
+        uses: actions/checkout@v2
+ 
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor  
-
-      - name: Debugging
         run: |
-          pwd
-          ls -R
-
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v3
-        with:
-          name: report
-          path: ./build.txt
+          # Install Snyk CLI
+          npm install -g snyk
+          # Authenticate with Snyk using token
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          # Run Snyk to generate the scan report in JSON format
+          snyk test  --json > scan_report.json
+          cat scan_report.json
