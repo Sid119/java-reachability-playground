@@ -12,17 +12,13 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --sarif-file-output=snyk.sarif
-
-
-      - name: List Build Directory Contents
-        run: ls -R build/     
+          args: --sarif-file-output=snyk.sarif    
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
           name: report
-          path: build/  
+          path: "./build/"  
 
       - name: Download Build
         uses: actions/download-artifact@v2
