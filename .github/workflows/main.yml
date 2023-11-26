@@ -12,6 +12,11 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+          
+      - name: List files in working directory
+        run: ls -R $GITHUB_WORKSPACE
+
+        
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
