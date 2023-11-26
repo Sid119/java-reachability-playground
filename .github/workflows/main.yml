@@ -12,6 +12,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
+          command: monitor  
           args: --sarif-file-output=snyk.sarif  
 
       - name: upload artifact
