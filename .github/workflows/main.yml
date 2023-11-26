@@ -13,6 +13,10 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
           
+      - name: Save Snyk test results
+        run: snyk test --json > build.txt 
+        working-directory: $GITHUB_WORKSPACE    
+          
       - name: List files in working directory
         run: ls -R $GITHUB_WORKSPACE
 
