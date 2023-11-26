@@ -2,25 +2,50 @@ name: Example workflow for Maven using Snyk
 on:
   workflow_dispatch:
 jobs:
-  security:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@master
-      - name: RunSnyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
         with:
-          command: monitor   
-  
+          distribution: 'adopt'
+          java-version: '11'
 
-      - name: upload artifact
-        run: mkdir build
+      - name: Build with Maven
+        run: mvn -B clean install
 
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v3
+  snyk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
         with:
-          name: report
-          path: .github/workflows/report.txt
+          distribution: 'adopt'
+          java-version: '11'
 
+      - name: Install Snyk CLI
+        run: curl -fsSL https://download.snyk.io/cli/latest/install | sh
+
+      - name: Authenticate with Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Run Snyk test
+        run: snyk test --fail-on-warnings
+
+      - name: Save Snyk test results
+        run: snyk test --json > snyk-report.json
+        working-directory: $GITHUB_WORKSPACE
+
+      - name: Upload Snyk report
+        uses: actions/upload-artifact@v2
+        with:
+          name: snyk-report
+          path: snyk-report.json  
