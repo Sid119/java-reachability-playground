@@ -33,6 +33,7 @@ jobs:
 
       - name: Install Snyk CLI
         run: curl -fsSL https://download.snyk.io/cli/latest/install | sh
+             export PATH="$HOME/.config/snyk:$PATH"
 
       - name: Authenticate with Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
