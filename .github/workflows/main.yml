@@ -10,3 +10,12 @@ jobs:
         uses: snyk/actions/maven@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Generate Snyk Report
+        run: npx snyk test --json > snyk-report.json
+
+      - name: Save Report as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: snyk-report
+          path: snyk-report.json   
