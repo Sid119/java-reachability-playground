@@ -1,28 +1,40 @@
+[7:18 PM] HARIOM SAINI
 name: Example workflow for Maven using Snyk
+ 
 on:
+
   workflow_dispatch:
+ 
 jobs:
+
   security:
+
     runs-on: ubuntu-latest
+ 
     steps:
-      - uses: actions/checkout@master
-      - name: RunSnyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
+
+      - name: Checkout code
+
+        uses: actions/checkout@v2
+ 
+      - name: Run Snyk to check for vulnerabilities
+
+        uses: snyk/actions/maven@v1
+
         continue-on-error: true
+
         env:
+
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-          
-      - name: Save Snyk test results
-        run: snyk test --json >> build.txt 
-        working-directory: $GITHUB_WORKSPACE    
-          
-      - name: List files in working directory
-        run: ls -R $GITHUB_WORKSPACE
 
-        
+ 
       - name: Archive code coverage results
-        uses: actions/upload-artifact@v3
+
+        uses: actions/upload-artifact@v2
+
         with:
+
           name: report
-          path: ./build.txt 
+
+          path: build.txt
