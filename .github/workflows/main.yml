@@ -1,12 +1,14 @@
 name: Example workflow for Maven using Snyk
 on:
   workflow_dispatch:
+
 jobs:
   security:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: RunSnyk to check for vulnerabilities
+
+      - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
         continue-on-error: true
         env:
@@ -14,8 +16,13 @@ jobs:
         with:
           command: monitor  
 
+      - name: Debugging
+        run: |
+          pwd
+          ls -R
+
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
           name: report
-          path: build.txt 
+          path: ./build.txt
