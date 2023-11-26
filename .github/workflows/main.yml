@@ -14,6 +14,10 @@ jobs:
         with:
           args: --sarif-file-output=snyk.sarif
 
+
+      - name: List Build Directory Contents
+        run: ls -R build/     
+
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
