@@ -18,4 +18,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: snyk-report
-          path: snyk-report.json   
+          path: snyk-report.json
+
+      - name: Download math result for job 1
+        uses: actions/download-artifact@v3
+        with:
+          name: snyk-reports
+      - shell: bash
+        run: |
+          cat snyk-report.json   
