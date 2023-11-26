@@ -21,13 +21,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: report
-          path: "./build/"  
-
-      - name: Download Build
-        uses: actions/download-artifact@v2
-        with:
-          name: report
-          path: path/to/artifact/world.txt   
+          path: ./build 
           
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
