@@ -11,20 +11,9 @@ jobs:
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      - name: Generate Snyk Report
-        run: snyk test --json > snyk-report.json
-
-      - name: Save Report as Artifact
-        uses: actions/upload-artifact@v2
         with:
-          name: snyk-report
-          path: snyk-report.json
-
-      - name: Download math result for job 1
-        uses: actions/download-artifact@v3
+          args: --sarif-file-output=snyk.sarif
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
         with:
-          name: snyk-reports
-      - shell: bash
-        run: |
-          cat snyk-report.json   
+          sarif_file: snyk.sarif
