@@ -18,7 +18,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
-          path: report.html  
+          path: report  
           
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
