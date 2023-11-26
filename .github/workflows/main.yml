@@ -20,4 +20,4 @@ jobs:
           snyk auth ${{ secrets.SNYK_TOKEN }}
           # Run Snyk to generate the scan report in JSON format
           snyk test  --json > scan_report.json
-          cat scan_report.json
+         
