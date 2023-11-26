@@ -13,7 +13,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Generate Snyk Report
-        run: npx snyk test --json > snyk-report.json
+        run: snyk test --json > snyk-report.json
 
       - name: Save Report as Artifact
         uses: actions/upload-artifact@v2
